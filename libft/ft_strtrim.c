@@ -6,7 +6,7 @@
 /*   By: pllucian <pllucian@21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 20:55:49 by pllucian          #+#    #+#             */
-/*   Updated: 2020/11/16 22:09:03 by pllucian         ###   ########.fr       */
+/*   Updated: 2021/08/05 22:05:07 by pllucian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		p_end--;
 	if (p_begin == p_end)
 		return (ft_strdup(""));
-	p = (char*)malloc(sizeof(char) * (p_end - p_begin + 2));
+	p = (char *)malloc(sizeof(char) * (p_end - p_begin + 2));
 	if (!p)
 		return (NULL);
 	ft_strlcpy(p, p_begin, p_end - p_begin + 2);

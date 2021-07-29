@@ -6,13 +6,13 @@
 /*   By: pllucian <pllucian@21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/15 17:07:36 by pllucian          #+#    #+#             */
-/*   Updated: 2020/11/15 17:08:14 by pllucian         ###   ########.fr       */
+/*   Updated: 2021/08/05 22:37:53 by pllucian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	return ('0' <= c && c <= '9');
 }

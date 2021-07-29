@@ -6,25 +6,27 @@
 /*   By: pllucian <pllucian@21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 01:38:46 by pllucian          #+#    #+#             */
-/*   Updated: 2020/11/21 13:30:38 by pllucian         ###   ########.fr       */
+/*   Updated: 2021/08/05 22:37:12 by pllucian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*first;
 	t_list	*new;
 
 	if (!lst || !f)
 		return (NULL);
-	if (!(new = ft_lstnew(f(lst->content))))
+	new = ft_lstnew(f(lst->content));
+	if (!new)
 		return (NULL);
 	first = new;
 	while (lst->next)
 	{
-		if (!(new->next = ft_lstnew(f(lst->next->content))))
+		new->next = ft_lstnew(f(lst->next->content));
+		if (!new->next)
 		{
 			ft_lstclear(&first, del);
 			return (NULL);

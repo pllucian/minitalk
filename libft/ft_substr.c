@@ -6,7 +6,7 @@
 /*   By: pllucian <pllucian@21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/15 18:48:09 by pllucian          #+#    #+#             */
-/*   Updated: 2020/11/16 20:29:01 by pllucian         ###   ########.fr       */
+/*   Updated: 2021/08/05 22:14:05 by pllucian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (start >= s_len)
 		return (ft_strdup(""));
 	if (start + len <= s_len)
-		p = (char*)malloc(sizeof(char) * (len + 1));
+		p = (char *)malloc(sizeof(char) * (len + 1));
 	else
-		p = (char*)malloc(sizeof(char) * (s_len - start + 1));
+		p = (char *)malloc(sizeof(char) * (s_len - start + 1));
 	if (!p)
 		return (NULL);
 	ft_strlcpy(p, s + start, len + 1);

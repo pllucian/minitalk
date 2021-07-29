@@ -1,60 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pllucian <pllucian@21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/28 13:11:17 by pllucian          #+#    #+#             */
-/*   Updated: 2021/07/29 23:10:41 by pllucian         ###   ########.fr       */
+/*   Created: 2021/07/28 13:11:29 by pllucian          #+#    #+#             */
+/*   Updated: 2021/07/30 00:18:38 by pllucian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-
-void	send_signal(int pid, char *msg)
-{
-	static unsigned char	symbol = 0;
-	static char				bit_num = 8;
-	static char				*str = NULL;
-
-	if (msg)
-	{
-		str = msg;
-		symbol = *str;
-	}
-	if (!bit_num)
-	{
-		bit_num = 8;
-		symbol = *(++str);
-	}
-	if (symbol >> --bit_num & 1)
-		kill(pid, SIGUSR1);
-	else
-		kill(pid, SIGUSR2);
-}
+#include "minitalk_bonus.h"
 
 void	handler(int signum, siginfo_t *siginfo, void *context)
 {
+	static unsigned char	symbol = 0;
+	static char				bit_num = 8;
+
 	(void)context;
-	if (signum == SIGUSR1)
-		send_signal(siginfo->si_pid, NULL);
-	else if (signum == SIGUSR2)
+	symbol |= (signum == SIGUSR1);
+	if (--bit_num)
 	{
-		ft_putstr_fd("ACK Received!\n", 1);
-		exit (0);
+		symbol <<= 1;
+		kill(siginfo->si_pid, SIGUSR1);
+	}
+	else
+	{
+		ft_putchar_fd(symbol, 1);
+		if (symbol)
+			kill(siginfo->si_pid, SIGUSR1);
+		else
+		{
+			ft_putchar_fd('\n', 1);
+			kill(siginfo->si_pid, SIGUSR2);
+		}
+		symbol = 0;
+		bit_num = 8;
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	struct sigaction	act;
 
-	if (argc != 3)
-	{
-		ft_putstr_fd("Error: Invalid arguments!\n", 2);
-		return (1);
-	}
+	ft_putstr_fd("PID: ", 1);
+	ft_putnbr_fd(getpid(), 1);
+	ft_putstr_fd("\n", 1);
 	ft_memset(&act, 0, sizeof(struct sigaction));
 	sigemptyset(&act.sa_mask);
 	sigaddset(&act.sa_mask, SIGUSR1);
@@ -63,12 +54,6 @@ int	main(int argc, char **argv)
 	act.sa_sigaction = handler;
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
-	if (kill(ft_atoi(argv[1]), 0))
-	{
-		ft_putstr_fd("Error: Invalid server PID\n", 2);
-		return (1);
-	}
-	send_signal(ft_atoi(argv[1]), argv[2]);
 	while (1)
 		pause();
 	return (0);

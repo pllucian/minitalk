@@ -6,7 +6,7 @@
 /*   By: pllucian <pllucian@21-school.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:18:05 by pllucian          #+#    #+#             */
-/*   Updated: 2020/11/15 13:05:31 by pllucian         ###   ########.fr       */
+/*   Updated: 2021/08/05 22:05:37 by pllucian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		}
 		big--;
 	}
-	return ((char*)big);
+	return ((char *)big);
 }
